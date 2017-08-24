@@ -5,7 +5,7 @@
 (package-initialize)
 (require 'package)
 (add-to-list 'package-archives
-             '("melpa-stable" . "https://stable.melpa.org/packages/"))
+             '("melpa" . "https://melpa.org/packages/"))
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
@@ -18,7 +18,7 @@
  '(inhibit-startup-screen t)
  '(package-selected-packages
    (quote
-    (markdown-mode fsharp-mode intero alchemist tuareg inf-ruby nodejs-repl typescript-mode company-web company go-mode csharp-mode javadoc-lookup js3-mode flycheck utop web-mode-edit-element web-mode skewer-mode elm-mode geiser tern autopair erlang slime neotree imenu-list auto-complete helm ido-ubiquitous python base16-theme cider))))
+    (forth-mode bifocal binclock markdown-mode fsharp-mode intero alchemist tuareg inf-ruby nodejs-repl typescript-mode company-web company go-mode csharp-mode javadoc-lookup js3-mode flycheck utop web-mode-edit-element web-mode skewer-mode elm-mode geiser tern autopair erlang slime neotree imenu-list auto-complete helm ido-ubiquitous python base16-theme cider))))
 
 ;; Set theme
 (load-theme 'base16-eighties)
