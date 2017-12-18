@@ -18,7 +18,7 @@
  '(inhibit-startup-screen t)
  '(package-selected-packages
    (quote
-    (forth-mode bifocal binclock markdown-mode fsharp-mode intero alchemist tuareg inf-ruby nodejs-repl typescript-mode company-web company go-mode csharp-mode javadoc-lookup js3-mode flycheck utop web-mode-edit-element web-mode skewer-mode elm-mode geiser tern autopair erlang slime neotree imenu-list auto-complete helm ido-ubiquitous python base16-theme cider))))
+    (helm-flx irony rubocop sml-mode gotest forth-mode markdown-mode fsharp-mode intero alchemist tuareg inf-ruby nodejs-repl typescript-mode company-web company go-mode csharp-mode js3-mode flycheck utop web-mode-edit-element web-mode elm-mode geiser tern autopair erlang slime neotree imenu-list auto-complete helm ido-ubiquitous python base16-theme cider))))
 
 ;; Set theme
 (load-theme 'base16-eighties)
@@ -41,9 +41,9 @@
 ;; Enable autopair in every buffer
 (autopair-global-mode t)
 
-;; Set default Python to 'python3'
-(setq python-shell-native-complete nil)
+;; Enable python 3
 (setq python-shell-interpreter "python3")
+(setq python-shell-native-complete nil)
 
 ;; Set SLIME settings
 (setq slime-lisp-implementations
@@ -57,7 +57,7 @@
 (setq geiser-racket-binary "/usr/local/bin/racket")
 
 ;; Add exec path
-(add-to-list 'exec-path "/usr/local/bin")
+(setenv "PATH" (concat "/usr/local/bin:" (getenv "PATH")))
 
 ;; 80 column width
 (setq-default fill-column 80)
@@ -86,6 +86,9 @@
           `((".*" . ,temporary-file-directory)))
 (setq auto-save-file-name-transforms
           `((".*" ,temporary-file-directory t)))
+
+;; Enable elm-format on save in elm-mode
+(setq elm-format-on-save t)
 
 ;; Set tab-width for web-mode
 (defun my-web-mode-hook ()
