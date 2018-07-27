@@ -2,10 +2,10 @@
 ;; installed packages.  Don't delete this line.  If you don't want it,
 ;; just comment it out by adding a semicolon to the start of the line.
 ;; You may delete these explanatory comments.
-(package-initialize)
 (require 'package)
+(unless package--initialized (package-initialize t))
 (add-to-list 'package-archives
-             '("melpa" . "https://melpa.org/packages/"))
+             '("melpa" . "http://melpa.org/packages/"))
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
@@ -13,12 +13,10 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(custom-safe-themes
-   (quote
-    ("9be1d34d961a40d94ef94d0d08a364c3d27201f3c98c9d38e36f10588469ea57" default)))
+   '("9be1d34d961a40d94ef94d0d08a364c3d27201f3c98c9d38e36f10588469ea57" default))
  '(inhibit-startup-screen t)
  '(package-selected-packages
-   (quote
-    (helm-flx irony rubocop sml-mode gotest forth-mode markdown-mode fsharp-mode intero alchemist tuareg inf-ruby nodejs-repl typescript-mode company-web company go-mode csharp-mode js3-mode flycheck utop web-mode-edit-element web-mode elm-mode geiser tern autopair erlang slime neotree imenu-list auto-complete helm ido-ubiquitous python base16-theme cider))))
+   '(## racket-mode yasnippet-snippets yasnippet helm-flx irony rubocop sml-mode gotest forth-mode markdown-mode fsharp-mode intero alchemist tuareg inf-ruby nodejs-repl typescript-mode company-web company go-mode csharp-mode js3-mode flycheck utop web-mode-edit-element web-mode elm-mode geiser tern autopair erlang slime neotree imenu-list auto-complete helm ido-ubiquitous python base16-theme cider)))
 
 ;; Set theme
 (load-theme 'base16-eighties)
@@ -58,6 +56,7 @@
 
 ;; Add exec path
 (setenv "PATH" (concat "/usr/local/bin:" (getenv "PATH")))
+(setq exec-path (append exec-path '("/usr/local/bin")))
 
 ;; 80 column width
 (setq-default fill-column 80)
@@ -94,7 +93,17 @@
 (defun my-web-mode-hook ()
   "Hooks for Web mode."
   (setq web-mode-markup-indent-offset 2)
-)
+  (setq web-mode-indent-style 2)
+  (setq web-mode-code-indent-offset 2)
+  (setq web-mode-css-indent-offset 2)
+  )
+
+(require 'org)
+(define-key global-map "\C-cl" 'org-store-link)
+(define-key global-map "\C-ca" 'org-agenda)
+(setq org-log-done t)
+
+
 (add-hook 'web-mode-hook  'my-web-mode-hook)
 
 (custom-set-faces
