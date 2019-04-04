@@ -3,7 +3,7 @@
 ;; just comment it out by adding a semicolon to the start of the line.
 ;; You may delete these explanatory comments.
 (require 'package)
-(unless package--initialized (package-initialize t))
+(package-initialize)
 (add-to-list 'package-archives
              '("melpa" . "http://melpa.org/packages/"))
 
@@ -16,7 +16,7 @@
    '("9be1d34d961a40d94ef94d0d08a364c3d27201f3c98c9d38e36f10588469ea57" default))
  '(inhibit-startup-screen t)
  '(package-selected-packages
-   '(## racket-mode yasnippet-snippets yasnippet helm-flx irony rubocop sml-mode gotest forth-mode markdown-mode fsharp-mode intero alchemist tuareg inf-ruby nodejs-repl typescript-mode company-web company go-mode csharp-mode js3-mode flycheck utop web-mode-edit-element web-mode elm-mode geiser tern autopair erlang slime neotree imenu-list auto-complete helm ido-ubiquitous python base16-theme cider)))
+   '(racket-mode yasnippet-snippets yasnippet helm-flx irony rubocop sml-mode gotest forth-mode markdown-mode fsharp-mode intero alchemist tuareg inf-ruby nodejs-repl typescript-mode company-web company go-mode csharp-mode js3-mode flycheck utop web-mode-edit-element web-mode elm-mode geiser tern autopair erlang slime neotree imenu-list auto-complete helm ido-ubiquitous python base16-theme cider)))
 
 ;; Set theme
 (load-theme 'base16-eighties)
