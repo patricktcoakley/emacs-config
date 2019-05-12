@@ -5,7 +5,7 @@
 (require 'package)
 (package-initialize)
 (add-to-list 'package-archives
-             '("melpa" . "http://melpa.org/packages/"))
+             '("melpa" . "https://melpa.org/packages/"))
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
@@ -45,18 +45,19 @@
 
 ;; Set SLIME settings
 (setq slime-lisp-implementations
-      '((sbcl ("/usr/local/bin/sbcl"))
-	(clisp ("/usr/local/bin/clisp"))))
+      '((sbcl ("/usr/bin/sbcl"))))
+
 (setq slime-contribs '(slime-fancy))
 (slime-setup '(slime-fancy slime-tramp slime-asdf))
 (slime-require :swank-listener-hooks)   
 
 ;; Set geiser settings
-(setq geiser-racket-binary "/usr/local/bin/racket")
+(setq geiser-racket-binary "/usr/bin/racket")
+(setq geiser-chez-binary "/usr/bin/scheme")
 
 ;; Add exec path
-(setenv "PATH" (concat "/usr/local/bin:" (getenv "PATH")))
-(setq exec-path (append exec-path '("/usr/local/bin")))
+(setenv "PATH" (concat "/usr/bin:" (getenv "PATH")))
+(setq exec-path (append exec-path '("/usr/bin")))
 
 ;; 80 column width
 (setq-default fill-column 80)
@@ -79,12 +80,14 @@
 (add-to-list 'auto-mode-alist '("\\.mustache\\'" . web-mode))
 (add-to-list 'auto-mode-alist '("\\.djhtml\\'" . web-mode))
 (add-to-list 'auto-mode-alist '("\\.html?\\'" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.tsx\\'" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.jsx\\'" . web-mode))
 
 ;; Set auto-save files to temp
 (setq backup-directory-alist
-          `((".*" . ,temporary-file-directory)))
+      `((".*" . ,temporary-file-directory)))
 (setq auto-save-file-name-transforms
-          `((".*" ,temporary-file-directory t)))
+      `((".*" ,temporary-file-directory t)))
 
 ;; Enable elm-format on save in elm-mode
 (setq elm-format-on-save t)
@@ -95,8 +98,7 @@
   (setq web-mode-markup-indent-offset 2)
   (setq web-mode-indent-style 2)
   (setq web-mode-code-indent-offset 2)
-  (setq web-mode-css-indent-offset 2)
-  )
+  (setq web-mode-css-indent-offset 2))
 
 (require 'org)
 (define-key global-map "\C-cl" 'org-store-link)
