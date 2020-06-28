@@ -14,14 +14,20 @@
  ;; If there is more than one, they won't work right.
  '(custom-safe-themes
    (quote
-    ("9be1d34d961a40d94ef94d0d08a364c3d27201f3c98c9d38e36f10588469ea57" default)))
+	("9be1d34d961a40d94ef94d0d08a364c3d27201f3c98c9d38e36f10588469ea57" default)))
  '(inhibit-startup-screen t)
  '(package-selected-packages
    (quote
-    (company-lua company-erlang racket-mode yasnippet-snippets yasnippet helm-flx irony rubocop sml-mode gotest forth-mode markdown-mode fsharp-mode intero alchemist tuareg inf-ruby nodejs-repl typescript-mode company-web company go-mode csharp-mode js3-mode flycheck utop web-mode-edit-element web-mode elm-mode geiser tern autopair erlang slime neotree imenu-list auto-complete helm ido-ubiquitous python base16-theme cider))))
+	(company-irony-c-headers flycheck-clang-analyzer irony-eldoc company-irony clang-format cmake-ide helm-flx irony markdown-mode flycheck geiser autopair slime neotree imenu-list auto-complete helm base16-theme cider))))
+
+;; Scratch buffer mode
+(setq initial-major-mode 'c++-mode)
+
+;; Option for meta on Mac
+(setq mac-option-modifier 'meta)
 
 ;; Set theme
-(load-theme 'base16-eighties)
+(load-theme 'base16-cupertino t)
 
 ;; Set font size
 (set-face-attribute 'default nil :height 190)
@@ -35,55 +41,32 @@
 ;; Enable column numbers in every buffer
 (column-number-mode t)
 
-;; Enable company mode in every buffer
-(global-company-mode t)
-
 ;; Enable autopair in every buffer
 (autopair-global-mode t)
 
-;; Enable python 3
-(setq python-shell-interpreter "python3")
-(setq python-shell-native-complete nil)
-
 ;; Set SLIME settings
 (setq slime-lisp-implementations
-      '((sbcl ("/usr/bin/sbcl"))))
-
+      '((sbcl ("/usr/local/bin/sbcl"))))
 (setq slime-contribs '(slime-fancy))
 (slime-setup '(slime-fancy slime-tramp slime-asdf))
-(slime-require :swank-listener-hooks)   
+(slime-require :swank-listener-hooks)
 
 ;; Set geiser settings
-(setq geiser-racket-binary "/usr/bin/racket")
-(setq geiser-chez-binary "/usr/bin/scheme")
+(setq geiser-racket-binary "/usr/local/bin/racket")
+(setq geiser-chez-binary "/usr/local/bin/scheme")
 
 ;; Add exec path
-(setenv "PATH" (concat "/usr/bin:" (getenv "PATH")))
-(setq exec-path (append exec-path '("/usr/bin")))
+(setenv "PATH" (concat "/usr/local/bin:" (getenv "PATH")))
+(setq exec-path (append exec-path '("/usr/local/bin")))
 
-;; 80 column width
-(setq-default fill-column 80)
+;; 120 column width
+(setq-default fill-column 120)
 
 ;; Maximize window
 (add-to-list 'default-frame-alist '(fullscreen . maximized))
 
-;; Use the opam installed utop
-(setq utop-command "opam config exec -- utop -emacs")
-
 ;; Remove comments from scratch buffer
 (setq initial-scratch-message nil)
-
-;; Enable web-mode
-(add-to-list 'auto-mode-alist '("\\.phtml\\'" . web-mode))
-(add-to-list 'auto-mode-alist '("\\.tpl\\.php\\'" . web-mode))
-(add-to-list 'auto-mode-alist '("\\.[agj]sp\\'" . web-mode))
-(add-to-list 'auto-mode-alist '("\\.as[cp]x\\'" . web-mode))
-(add-to-list 'auto-mode-alist '("\\.erb\\'" . web-mode))
-(add-to-list 'auto-mode-alist '("\\.mustache\\'" . web-mode))
-(add-to-list 'auto-mode-alist '("\\.djhtml\\'" . web-mode))
-(add-to-list 'auto-mode-alist '("\\.html?\\'" . web-mode))
-(add-to-list 'auto-mode-alist '("\\.tsx\\'" . web-mode))
-(add-to-list 'auto-mode-alist '("\\.jsx\\'" . web-mode))
 
 ;; Set auto-save files to temp
 (setq backup-directory-alist
@@ -91,24 +74,40 @@
 (setq auto-save-file-name-transforms
       `((".*" ,temporary-file-directory t)))
 
-;; Enable elm-format on save in elm-mode
-(setq elm-format-on-save t)
+;; Irony mode hooks
+(require 'irony)
+(add-hook 'c++-mode-hook 'irony-mode)
+(add-hook 'c-mode-hook 'irony-mode)
+(add-hook 'objc-mode-hook 'irony-mode)
+(add-hook 'irony-mode-hook 'irony-cdb-autosetup-compile-options)
 
-;; Set tab-width for web-mode
-(defun my-web-mode-hook ()
-  "Hooks for Web mode."
-  (setq web-mode-markup-indent-offset 2)
-  (setq web-mode-indent-style 2)
-  (setq web-mode-code-indent-offset 2)
-  (setq web-mode-css-indent-offset 2))
+;; Tab key
+(setq-default tab-always-indent 'complete)
 
-(require 'org)
-(define-key global-map "\C-cl" 'org-store-link)
-(define-key global-map "\C-ca" 'org-agenda)
-(setq org-log-done t)
+;; CC mode
+(setq-default c-default-style "k&r"
+			  tab-width 4
+			  indent-tabs-mode t)
+
+;; Company
+(require 'company)
+(add-hook 'after-init-hook 'global-company-mode)
+(require 'company-irony-c-headers)
+(require 'company-c-headers)
+(eval-after-load 'company
+  '(add-to-list
+    'company-backends '(company-irony-c-headers company-irony)))
+
+;; Flycheck
+(require 'flycheck)
+(with-eval-after-load 'flycheck
+  (require 'flycheck-clang-analyzer)
+  (flycheck-clang-analyzer-setup))
+(add-hook 'c++-mode-hook
+		  (lambda () (setq flycheck-clang-language-standard "c++11")))
 
 
-(add-hook 'web-mode-hook  'my-web-mode-hook)
+(add-hook 'after-init-hook #'global-flycheck-mode)
 
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
