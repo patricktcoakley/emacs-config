@@ -35,6 +35,7 @@ ac-comphist.dat
 
 # AUCTeX auto folder
 /auto/
+irony
 
 # cask packages
 .cask/

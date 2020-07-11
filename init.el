@@ -18,7 +18,7 @@
  '(inhibit-startup-screen t)
  '(package-selected-packages
    (quote
-	(company-irony-c-headers flycheck-clang-analyzer irony-eldoc company-irony clang-format cmake-ide helm-flx irony markdown-mode flycheck geiser autopair slime neotree imenu-list auto-complete helm base16-theme cider))))
+	(company-glsl company-irony-c-headers flycheck-clang-analyzer irony-eldoc company-irony clang-format cmake-ide helm-flx irony markdown-mode flycheck geiser autopair slime neotree imenu-list auto-complete helm base16-theme cider))))
 
 ;; Scratch buffer mode
 (setq initial-major-mode 'c++-mode)
@@ -44,16 +44,22 @@
 ;; Enable autopair in every buffer
 (autopair-global-mode t)
 
-;; Set SLIME settings
-(setq slime-lisp-implementations
-      '((sbcl ("/usr/local/bin/sbcl"))))
+;; Set LISP settings
+(if (eq system-type 'darwin)
+	(progn
+	  (setq inferior-lisp-program "/usr/bin/sbcl")
+	  (setq geiser-racket-binary "/usr/local/bin/racket")
+	  (setq geiser-chez-binary "/usr/local/bin/chez")))
+
+(if (eq system-type 'gnu/linux)
+	(progn
+	  (setq inferior-lisp-program "/usr/bin/sbcl")
+	  (setq geiser-racket-binary "/usr/bin/racket")
+	  (setq geiser-chez-binary "/usr/bin/chez")))
+
 (setq slime-contribs '(slime-fancy))
 (slime-setup '(slime-fancy slime-tramp slime-asdf))
 (slime-require :swank-listener-hooks)
-
-;; Set geiser settings
-(setq geiser-racket-binary "/usr/local/bin/racket")
-(setq geiser-chez-binary "/usr/local/bin/scheme")
 
 ;; Add exec path
 (setenv "PATH" (concat "/usr/local/bin:" (getenv "PATH")))
@@ -93,7 +99,6 @@
 (require 'company)
 (add-hook 'after-init-hook 'global-company-mode)
 (require 'company-irony-c-headers)
-(require 'company-c-headers)
 (eval-after-load 'company
   '(add-to-list
     'company-backends '(company-irony-c-headers company-irony)))
@@ -104,7 +109,7 @@
   (require 'flycheck-clang-analyzer)
   (flycheck-clang-analyzer-setup))
 (add-hook 'c++-mode-hook
-		  (lambda () (setq flycheck-clang-language-standard "c++11")))
+		  (lambda () (setq flycheck-clang-language-standard "c++14")))
 
 
 (add-hook 'after-init-hook #'global-flycheck-mode)
