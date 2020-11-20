@@ -12,22 +12,19 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(custom-safe-themes
-   (quote
-	("9be1d34d961a40d94ef94d0d08a364c3d27201f3c98c9d38e36f10588469ea57" default)))
+ '(custom-safe-themes '(default))
  '(inhibit-startup-screen t)
  '(package-selected-packages
-   (quote
-	(company-glsl company-irony-c-headers flycheck-clang-analyzer irony-eldoc company-irony clang-format cmake-ide helm-flx irony markdown-mode flycheck geiser autopair slime neotree imenu-list auto-complete helm base16-theme cider))))
+   '(lsp-mode rustic company-glsl company-irony-c-headers flycheck-clang-analyzer irony-eldoc company-irony clang-format cmake-ide helm-flx irony markdown-mode flycheck geiser autopair slime neotree imenu-list auto-complete helm base16-theme cider)))
 
 ;; Scratch buffer mode
-(setq initial-major-mode 'c++-mode)
+(setq initial-major-mode 'c-mode)
 
 ;; Option for meta on Mac
 (setq mac-option-modifier 'meta)
 
 ;; Set theme
-(load-theme 'base16-cupertino t)
+(load-theme 'base16-eighties t)
 
 ;; Set font size
 (set-face-attribute 'default nil :height 190)
@@ -47,7 +44,7 @@
 ;; Set LISP settings
 (if (eq system-type 'darwin)
 	(progn
-	  (setq inferior-lisp-program "/usr/bin/sbcl")
+	  (setq inferior-lisp-program "/usr/local/bin/sbcl")
 	  (setq geiser-racket-binary "/usr/local/bin/racket")
 	  (setq geiser-chez-binary "/usr/local/bin/chez")))
 
@@ -109,14 +106,39 @@
   (require 'flycheck-clang-analyzer)
   (flycheck-clang-analyzer-setup))
 (add-hook 'c++-mode-hook
-		  (lambda () (setq flycheck-clang-language-standard "c++14")))
-
-
+		  (lambda () (setq flycheck-clang-language-standard "c++20")))
 (add-hook 'after-init-hook #'global-flycheck-mode)
 
+;; Colors
+(set-cursor-color "lightgreen")
+(set-background-color "#072626")
+(set-face-foreground 'font-lock-builtin-face "lightgreen")
+(global-font-lock-mode 1)
+
+;; Theme
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- )
+ '(default ((t (:foreground "#d3b58d" :background "#041818"))))
+ '(custom-group-tag-face ((t (:underline t :foreground "lightblue"))) t)
+ '(custom-variable-tag-face ((t (:underline t :foreground "lightblue"))) t)
+ '(font-lock-builtin-face ((t nil)))
+ '(font-lock-comment-delimiter-face ((t (:foreground "#31b72c"))))
+ '(font-lock-comment-face ((t (:foreground "#3fdflf"))))
+ '(font-lock-function-name-face ((((class color) (background dark)) (:foreground "white"))))
+ '(font-lock-keyword-face ((t (:foreground "white"))))
+ '(font-lock-preprocessor-face ((t (:foreground "#31b72c"))))
+ '(font-lock-string-face ((t (:foreground "#0fdfaf"))))
+ '(font-lock-type-face ((t (:foreground "lightgreen"))))
+ '(font-lock-variable-name-face ((((class color) (background dark)) (:foreground "#c8d4ec"))))
+ '(font-lock-warning-face ((t (:foreground "#504038"))))
+ '(highlight ((t (:foreground "navyblue" :background "darkseagreen2"))))
+ '(mode-line ((t (:inverse-video t))))
+ '(region ((t (:background "blue"))))
+ '(rustic-compilation-column ((t (:inherit compilation-column-number))))
+ '(rustic-compilation-error ((t (:foreground "red"))))
+ '(rustic-compilation-line ((t (:foreground "LimeGreen"))))
+ '(widget-field-face ((t (:foreground "white"))) t)
+ '(widget-single-line-field-face ((t (:background "darkgray"))) t))
