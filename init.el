@@ -15,13 +15,16 @@
  '(custom-safe-themes '(default))
  '(inhibit-startup-screen t)
  '(package-selected-packages
-   '(lsp-mode rustic company-glsl company-irony-c-headers flycheck-clang-analyzer irony-eldoc company-irony clang-format cmake-ide helm-flx irony markdown-mode flycheck geiser autopair slime neotree imenu-list auto-complete helm base16-theme cider)))
+   '(lsp-mode rustic company-glsl company-irony-c-headers flycheck-clang-analyzer irony-eldoc company-irony clang-format cmake-ide helm-flx irony markdown-mode flycheck geiser slime neotree imenu-list auto-complete helm base16-theme cider)))
 
 ;; Scratch buffer mode
 (setq initial-major-mode 'c-mode)
 
 ;; Option for meta on Mac
 (setq mac-option-modifier 'meta)
+
+;; Electric pair mode
+(add-hook 'c-mode-common-hook 'electric-pair-mode)
 
 ;; Set theme
 (load-theme 'base16-eighties t)
@@ -37,9 +40,6 @@
 
 ;; Enable column numbers in every buffer
 (column-number-mode t)
-
-;; Enable autopair in every buffer
-(autopair-global-mode t)
 
 ;; Set LISP settings
 (if (eq system-type 'darwin)
