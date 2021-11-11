@@ -13,9 +13,10 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(custom-safe-themes '(default))
+ '(delete-selection-mode nil)
  '(inhibit-startup-screen t)
  '(package-selected-packages
-   '(lsp-mode rustic company-glsl company-irony-c-headers flycheck-clang-analyzer irony-eldoc company-irony clang-format cmake-ide helm-flx irony markdown-mode flycheck geiser slime neotree imenu-list auto-complete helm base16-theme cider)))
+   '(geiser-chez geiser-racket lsp-mode rustic company-glsl company-irony-c-headers flycheck-clang-analyzer irony-eldoc company-irony clang-format cmake-ide helm-flx irony markdown-mode flycheck geiser slime neotree imenu-list auto-complete helm base16-theme cider)))
 
 ;; Scratch buffer mode
 (setq initial-major-mode 'c-mode)
